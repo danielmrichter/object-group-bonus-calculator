@@ -32,26 +32,45 @@ const employees = [
   }
 ];
 
-console.log('array of employee data: ',  employees );
+for(let employee of employees){
+  console.log(calculateIndividualEmployeeBonus(employee))
+}
 
 
-// YOU SHOULD NOT NEED TO CHANGE ANYTHING ABOVE THIS POINT
+function calculateBonusNumber(employee){
+  let bonusPercentage = 0
+  if (employee.reviewRating === 3){
+    bonusPercentage = .04
+  } else if (employee.reviewRating === 4){
+    bonusPercentage = .06
+  } else if (employee.reviewRating === 5){
+    bonusPercentage = .10
+  }
+  if (employee.employeeNumber.length === 4){
+    bonusPercentage += .05
+  }
+  if (employee.annualSalary > 65000){
+    bonusPercentage -= .01
+  }
+  if (bonusPercentage > .13){
+    bonusPercentage = .13
+  }
+  if (bonusPercentage < 0){
+    bonusPercentage = 0
+  }
+  return bonusPercentage
 
-// This problem is massive! Break the problem down, take small steps, and test as you go.
-// What is the fewest lines of code I can write and test to get just a little closer?
+}
+function calculateIndividualEmployeeBonus(employee) {
+  let bonusPercentage = calculateBonusNumber(employee)
+  let annualSalaryNumber = Number(employee.annualSalary)
+  let totalBonus = annualSalaryNumber * bonusPercentage
+  let totalCompensation = annualSalaryNumber + totalBonus
 
-// This is not a race. Everyone on your team should understand what is happening.
-// Ask questions when you don't.
-
-
-
-
-// This function will calculate 1 employee's bonus!
-//
-function calculateIndividualEmployeeBonus( employee ) {  
-  // your logic here
-  
-  
-  // return new object with bonus results
-
+  return {
+    name: employee.name,
+    bonusPercentage: bonusPercentage,
+    totalCompensation: totalCompensation,
+    totalBonus: totalBonus
+  }
 }
